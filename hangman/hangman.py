@@ -15,15 +15,20 @@ while misses < 4:
     while len(guess) > 1 or not guess.isalpha():
         guess = input("Guess a SINGLE letter: ")
     else:
-        # Add duplicate guess check here
-        if guess.lower() in word:
-            for i in range(0, len(word)):
-                if word[i] == guess.lower():
-                    status[i] = guess.lower()
-                i += 1
+        guess = guess.lower()
+        if guess not in guesses:
+            # Add duplicate guess check here
+            if guess in word:
+                for i in range(0, len(word)):
+                    if word[i] == guess:
+                        status[i] = guess
+                    i += 1
+            else:
+                misses += 1
+                print("You missed! That's " + str(misses) + " of 4 misses!")
+            guesses.append(guess)
         else:
-            misses += 1
-            print("You missed! That's " + str(misses) + " of 4 misses!")
+            print("You already guessed that letter.")
     if status == word:
         print("".join(status))
         print("Congrats! You got it!")
